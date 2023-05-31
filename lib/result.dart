@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 
 class Result extends StatelessWidget {
-  const Result(
-      {super.key, required this.resultScore, required this.resetHandler});
+  Result(
+      {super.key,
+      required this.resultScore,
+      required this.resetHandler,
+      required this.quizSuivant,
+      required this.monNiveau,
+      required this.scoreTotal});
   final int resultScore;
   final VoidCallback resetHandler;
+  final VoidCallback quizSuivant;
+  final int monNiveau;
+  final int scoreTotal;
+
+  var leScore = 5;
 
   String get resultPhrase {
     String resultText;
-    if (resultScore <= 8) {
-      resultText = 'You are awesome and innocent';
-    } else if (resultScore <= 12) {
-      resultText = 'Pretty Likeabe!';
-    } else if (resultScore <= 8) {
-      resultText = 'You are ... strange?!';
+    if (resultScore < leScore) {
+      resultText = 'Desolé cher amis';
     } else {
-      resultText = 'You are so bad';
+      resultText = 'Félicitation papah!';
     }
     return resultText;
   }
@@ -30,8 +36,24 @@ class Result extends StatelessWidget {
           style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
-        TextButton(
-            onPressed: resetHandler, child: const Text("Restart Quiz!", style: TextStyle(color: Colors.blue),))
+        resultScore < leScore
+            ? TextButton(
+                onPressed: resetHandler,
+                child: const Text(
+                  "Restart Quiz!",
+                  style: TextStyle(color: Colors.blue),
+                ))
+            : monNiveau == 3 && scoreTotal >= 15
+                ? const Text(
+                    "Vous avez débloqué tous les niveau Utilisez le boutton bugger pour naviger entre tous les niveaux. ",
+                    style: TextStyle(color: Colors.blue),
+                  )
+                : TextButton(
+                    onPressed: quizSuivant,
+                    child: const Text(
+                      "Aller au quiz suivant!",
+                      style: TextStyle(color: Colors.blue),
+                    ))
       ],
     ));
   }

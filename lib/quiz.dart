@@ -22,7 +22,7 @@ class Quiz extends StatelessWidget {
       child: Column(
         children: [
           Question(
-            questionText: questions[questionIndex]['questionText'] as String,
+            questionText: questions[questionIndex]['questionText'],
           ),
           ...(questions[questionIndex]['answers'] as List<Map<String, dynamic>>)
               .map((answer) {

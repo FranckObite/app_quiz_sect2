@@ -9,7 +9,7 @@ class Question extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(10),
-      width: double.infinity,
+      width: MediaQuery.of(context).size.width,
       child: Text(
         questionText,
         style: TextStyle(fontSize: 28),
