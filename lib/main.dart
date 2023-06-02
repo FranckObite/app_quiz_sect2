@@ -222,7 +222,7 @@ class _MyAppState extends State<MyApp> {
       } else if (monNiveau == 3 && _totalScore2 < 15) {
         _totalScore2 = 10;
       }
-      
+
       if (monNiveau == 1 && _totalScore2 >= 15) {
         _totalScore2 = _totalScore2 - _totalScore;
       } else if (monNiveau == 2 && _totalScore2 >= 15) {
@@ -265,13 +265,23 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: AppBar(
-            title: const Text("My First App"),
+            title: Row(
+              children: [
+                const Text("My Quiz App"),
+                const Spacer(),
+                Text('Score total: $_totalScore2'),
+              ],
+            ),
           ),
-          endDrawer: Drawer(
+          drawer: Drawer(
             child: ListView(
               children: [
-                DrawerHeader(
-                  child: Container(),
+                const DrawerHeader(
+                  child: Icon(
+                    Icons.quiz,
+                    size: 100,
+                    color: Colors.orange,
+                  ),
                 ),
                 ListTile(
                   onTap: () {
@@ -360,31 +370,32 @@ class _MyAppState extends State<MyApp> {
               ],
             ),
           ),
-          body: Column(
-            children: [
-              Row(
-                children: [
-                  Text("Niveau de Jeux: $monNiveau"),
-                  const Spacer(),
-                  Text('Score du niveau: $_totalScore'),
-                  const Spacer(),
-                  Text('Score: $_totalScore2'),
-                ],
-              ),
-              _questionIndex < _questions.length
-                  ? Quiz(
-                      answerQuestion: _answerQuestion,
-                      questionIndex: _questionIndex,
-                      questions: _allLevel["niveau$monNiveau"]!,
-                    )
-                  : Result(
-                      resultScore: _totalScore,
-                      resetHandler: _resetQuiz,
-                      quizSuivant: _quizSuivant,
-                      monNiveau: monNiveau,
-                      scoreTotal: _totalScore2,
-                    )
-            ],
+          body: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text("Niveau de Jeux: $monNiveau"),
+                    const Spacer(),
+                    Text('Score du niveau: $_totalScore'),
+                  ],
+                ),
+                _questionIndex < _questions.length
+                    ? Quiz(
+                        answerQuestion: _answerQuestion,
+                        questionIndex: _questionIndex,
+                        questions: _allLevel["niveau$monNiveau"]!,
+                      )
+                    : Result(
+                        resultScore: _totalScore,
+                        resetHandler: _resetQuiz,
+                        quizSuivant: _quizSuivant,
+                        monNiveau: monNiveau,
+                        scoreTotal: _totalScore2,
+                      )
+              ],
+            ),
           )),
     );
   }
